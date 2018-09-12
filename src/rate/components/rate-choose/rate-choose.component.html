@@ -1,0 +1,47 @@
+<mat-card (click)="openRatesDropdown()" class="mat-card-dark mat-card-no-shadow mat-card-small-paddings">
+  <ng-container *ngIf="!isLoading && selectedRate" [ngTemplateOutlet]="rateSelectDropdown"></ng-container>
+  <ng-container *ngIf="!isLoading && selectedRate" [ngTemplateOutlet]="mainButtonRateSelectedView"></ng-container>
+  <ng-container *ngIf="!isLoading && !selectedRate" [ngTemplateOutlet]="mainButtonRateNotSelectedView"></ng-container>
+  <ng-container *ngIf="isLoading" [ngTemplateOutlet]="mainButtonRateLoadingView"></ng-container>
+</mat-card>
+
+<ng-template #mainButtonRateSelectedView>
+  <div class="rate-choose-select-container">
+    <pe-rate-view [rate]="selectedRate" [previewMode]="true"></pe-rate-view>
+    <button mat-button
+            type="button"
+            class="mat-button-link mat-button-space-around mat-button-fit-content"
+    ><svg class="icon icon-16"><use xlink:href="#icon-arrow-down-16"></use></svg></button>
+  </div>
+</ng-template>
+
+<ng-template #mainButtonRateNotSelectedView>
+  <button mat-button
+          type="button"
+          class="mat-button-link mat-button-space-between mat-button-block">
+    {{ 'ng_kit.rate.no_rate_selected' | translate }}
+    <svg class="icon icon-16"><use xlink:href="#icon-arrow-down-16"></use></svg>
+  </button>
+</ng-template>
+
+<ng-template #mainButtonRateLoadingView>
+  <button mat-button
+          class="mat-button-link mat-button-space-between mat-button-block">&nbsp;</button>
+  <div class="loader_48"></div>
+</ng-template>
+
+<ng-template #rateSelectDropdown>
+  <div class="select-dropdown">
+    <mat-select #rateSelect
+                [value]="selectedRate.title"
+                [panelClass]="'mat-select-panel-dark mat-select-panel-border-radius-lg'">
+      <div class="rates-container">
+        <mat-option *ngFor="let rate of rates"
+                    [value]="rate.title"
+                    (click)="chooseRate(rate)">
+          <div [innerHtml]="rate.title"></div>
+        </mat-option>
+      </div>
+    </mat-select>
+  </div>
+</ng-template>
