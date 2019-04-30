@@ -1,2 +1,2 @@
 # angular-sample
-Sample of angular component.
+Sample of Angular Component.
